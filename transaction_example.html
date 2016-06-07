@@ -1,0 +1,39 @@
+<?php
+$serverName = "serverName\sqlexpress";
+$connectionInfo = array( "Database"=>"dbName", "UID"=>"userName", "PWD"=>"password");
+$conn = sqlsrv_connect( $serverName, $connectionInfo);
+if( $conn === false ) {
+    die( print_r( sqlsrv_errors(), true ));
+}
+
+/* Iniciar la transacción. */
+if ( sqlsrv_begin_transaction( $conn ) === false ) {
+     die( print_r( sqlsrv_errors(), true ));
+}
+
+/* Inicializar los parámetros. */
+$orderId = 1; $qty = 10; $productId = 100;
+
+/* Preprar y ejecutar la primera sentencia . */
+$sql1 = "INSERT INTO OrdersTable (ID, Quantity, ProductID)
+          VALUES (?, ?, ?)";
+$params1 = array( $orderId, $qty, $productId );
+$stmt1 = sqlsrv_query( $conn, $sql1, $params1 );
+
+/* Preparar y ejecutar la segunda sentencia. */
+$sql2 = "UPDATE InventoryTable 
+          SET Quantity = (Quantity - ?) 
+          WHERE ProductID = ?";
+$params2 = array($qty, $productId);
+$stmt2 = sqlsrv_query( $conn, $sql2, $params2 );
+
+/* Si ambas sentencias finalizaran con éxito, consolidar la transacción. */
+/* De caso contrario, revertirla. */
+if( $stmt1 && $stmt2 ) {
+     sqlsrv_commit( $conn );
+     echo "Transaccion consolidada.<br />";
+} else {
+     sqlsrv_rollback( $conn );
+     echo "Transaccion revertida.<br />";
+}
+?>
