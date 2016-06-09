@@ -7,7 +7,7 @@
 	require 'conexion.php';
 	header('Content-Type: application/json');
 
-	$sql = "SELECT * FROM OPERACION";
+	$sql = "SELECT * FROM OPERACION WHERE idOperacion in ('RE', 'DE', 'PS')";
 	$params = [];
 
 	$result_set = sqlsrv_query($conexion, $sql, $params);
