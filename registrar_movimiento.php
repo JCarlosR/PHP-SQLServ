@@ -36,10 +36,13 @@
 	];
 
 	$result_set = sqlsrv_query( $conexion, $sql_SP, $params );
+
 	if( $result_set === false ) {
 		$data['success'] = false;
-		$data['message'] = sqlsrv_errors()[0]['message'];
+		$message = sqlsrv_errors()[0]['message'];
+		$position = strrpos($message, ']');
+		$data['message'] = substr($message, $position+1);
 		die( json_encode($data) );
 	}
 
-	echo resultSetToJson('movimientos', $result_set);
+	echo resultSetToJson('cuentas', $result_set);

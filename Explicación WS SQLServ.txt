@@ -1,0 +1,51 @@
+10.40
+11.40
+
+POST
+
+/pagina.php?idCliente=5&nombre=Remso
+$_GET['idCliente']
+$_GET['nombre']
+
+INSERT Cliente VALUES ($idCliente, $nombre)
+{ "exito": true }
+
+
+/pagina.php?idCliente=5
+{ "exito": false, "mensaje": "No se ha indicado el nombre." }
+
+$arreglo[0]
+
+
+GET
+/clientes.php
+SELECT * FROM Cliente
+[{}, {}]
+{ "clientes": [{"id": 1, "nombre": "Remso"}, {"id": 2, "nombre": "Milagros"}] }
+
+$data['success'] = true;
+$data['clientes'] = $clientes;
+json_encode($data)
+
+
+ID Movimiento
+Cuenta
+Tipo operación
+Importe
+GUARDAR
+
+POST
+guardar movimiento
+
+
+Descargar el proyecto
+Hacer sus cambios
+Verificar que funcione de manera local
+
+1. Ubicarse en la carpeta PHP (cd, cd)
+2. Inicializar git (git init)
+3. Crear un commit (git add -A         git commit -m "Trabajo cliente servidor")
+
+4. Conectarse a github (git remote add origin PEGAN_CODIGO)
+5. Subir (git push origin master)
+
